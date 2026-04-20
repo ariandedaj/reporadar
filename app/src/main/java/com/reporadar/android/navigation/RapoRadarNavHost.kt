@@ -5,8 +5,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.reporadar.android.view.RootScreen
+import com.reporadar.searchautocomplete.presentation.SearchAutocompleteScreen
 
 private const val RootScreen = "root_screen"
+private const val SearchAutoCompleteScreen = "search_autocomplete_screen"
 
 @Composable
 fun RepoRadarNavHost() {
@@ -16,7 +18,15 @@ fun RepoRadarNavHost() {
         startDestination = RootScreen
     ) {
         composable(route = RootScreen) {
-            RootScreen { }
+            RootScreen {
+                navController.navigate(route = SearchAutoCompleteScreen)
+            }
+        }
+
+        composable(
+            route = SearchAutoCompleteScreen
+        ) {
+            SearchAutocompleteScreen()
         }
     }
 }

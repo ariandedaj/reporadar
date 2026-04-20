@@ -26,6 +26,10 @@ sealed class FetchDataErrorType(
         override val exception: Exception? = null
     ) : FetchDataErrorType()
 
+    data class ResponseMappingFailed(
+        override val exception: Exception? = null
+    ) : FetchDataErrorType()
+
     data class HttpError(
         override val exception: Exception? = null,
         val httpStatusCode: Int

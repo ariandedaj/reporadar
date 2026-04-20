@@ -1,6 +1,6 @@
 package com.reporadar.searchautocomplete.data.model
 
-import com.reporadar.searchautocomplete.domain.Repository
+import com.reporadar.searchautocomplete.domain.SearchResultItem
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,9 +15,9 @@ data class UserDto(
 ) {
 
     @Throws(IllegalArgumentException::class)
-    fun UserDto.toDomain(): Repository {
-        return Repository(
-            name = requireNotNull(this.login)
+    fun toDomain(): SearchResultItem.User {
+        return SearchResultItem.User(
+            loginName = requireNotNull(this.login)
         )
     }
 

@@ -21,16 +21,22 @@ fun RepoRadarNavHost() {
         popEnterTransition = { slideInFromLeft() },
         popExitTransition = { slideOutToRight() }
     ) {
-        composable(route = RootScreen) {
+        composable(
+            route = RootScreen
+        ) {
             RootScreen {
-                navController.navigate(route = SearchAutoCompleteScreen)
+                navController.navigate(
+                    route = SearchAutoCompleteScreen
+                )
             }
         }
 
         composable(
             route = SearchAutoCompleteScreen
         ) {
-            SearchAutocompleteScreen()
+            SearchAutocompleteScreen {
+                navController.popBackStack()
+            }
         }
     }
 }

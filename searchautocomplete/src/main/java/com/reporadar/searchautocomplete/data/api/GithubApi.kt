@@ -5,8 +5,14 @@ import com.reporadar.searchautocomplete.data.model.UserResultDto
 
 interface GithubApi {
 
-    suspend fun searchRepositories(query: String): RepositoryResultDto
+    suspend fun searchRepositories(
+        query: String,
+        limit: Int
+    ): RepositoryResultDto
 
-    suspend fun searchUsers(query: String): UserResultDto
+    suspend fun searchUsers(
+        query: String,
+        limit: Int
+    ): UserResultDto
 
 }

@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "RepoRadar"
 include(":app")
+include(":searchautocomplete")

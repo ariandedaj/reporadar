@@ -17,6 +17,7 @@ local.properties
 .idea/assetWizardSettings.xml
 .idea/dictionaries
 .idea/jarRepositories.xml
+.idea/deploymentTargetSelector.xml
 
 # Android / Kotlin
 *.apk

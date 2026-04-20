@@ -1,0 +1,40 @@
+# Gradle
+.gradle/
+build/
+
+# Local SDK path and secrets — never commit
+local.properties
+
+# Android Studio / IntelliJ
+*.iml
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/navEditor.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/jarRepositories.xml
+
+# Android / Kotlin
+*.apk
+*.aab
+*.ap_
+*.dex
+captures/
+.externalNativeBuild
+.cxx/
+.kotlin/
+
+# Keystores
+*.jks
+*.keystore
+
+# Logs & profiling
+*.log
+*.hprof
+
+# macOS
+.DS_Store

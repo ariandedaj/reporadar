@@ -15,7 +15,11 @@ fun RepoRadarNavHost() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = RootScreen
+        startDestination = RootScreen,
+        enterTransition = { slideInFromRight() },
+        exitTransition = { slideOutToLeft() },
+        popEnterTransition = { slideInFromLeft() },
+        popExitTransition = { slideOutToRight() }
     ) {
         composable(route = RootScreen) {
             RootScreen {

@@ -57,4 +57,46 @@ class SearchAutocompleteViewModelImplTest {
         assertTrue(viewModel.uiState.value is SearchAutocompleteUiState.NoResults)
     }
 
+    @Test
+    fun rapidInputChanges_debounceEmitsOnlyLastQueryAndPerformsSingleSearch() = runTest(testDispatcher) {
+        val repository = RecordingGithubSearchRepository()
+        val viewModel = SearchAutocompleteViewModelImpl(repository = repository)
+
+        viewModel.onSearchTextChange(newText = "a")
+        testScheduler.advanceTimeBy(delayTimeMillis = 100L)
+        viewModel.onSearchTextChange(newText = "ab")
+        testScheduler.advanceTimeBy(delayTimeMillis = 100L)
+        viewModel.onSearchTextChange(newText = "abc")
+        testScheduler.advanceTimeBy(delayTimeMillis = 301L)
+        advanceUntilIdle()
+
+        assertEquals(
+            "debounce should wait for quiet period after last keystroke, then search once",
+            listOf("abc"),
+            repository.searchQueries,
+        )
+        assertTrue(viewModel.uiState.value is SearchAutocompleteUiState.NoResults)
+    }
+
+    @Test
+    fun rapidInputChanges_collectLatestCancelsStaleSearchWhileRepositoryStillSuspended() =
+        runTest(testDispatcher) {
+            val repository = DelayingGithubSearchRepository(delayMs = 500L)
+            val viewModel = SearchAutocompleteViewModelImpl(repository = repository)
+
+            viewModel.onSearchTextChange(newText = "abc")
+            testScheduler.advanceTimeBy(delayTimeMillis = 301L)
+
+            viewModel.onSearchTextChange(newText = "abcd")
+            testScheduler.advanceTimeBy(delayTimeMillis = 301L)
+            advanceUntilIdle()
+
+            assertEquals(
+                "in-flight search for earlier query must not complete once a newer debounced query arrives",
+                listOf("abcd"),
+                repository.searchQueries,
+            )
+            assertTrue(viewModel.uiState.value is SearchAutocompleteUiState.NoResults)
+        }
+
 }

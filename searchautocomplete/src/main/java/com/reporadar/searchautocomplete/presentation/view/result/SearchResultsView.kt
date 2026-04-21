@@ -2,13 +2,13 @@ package com.reporadar.searchautocomplete.presentation.view.result
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,9 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.reporadar.searchautocomplete.R
 import com.reporadar.searchautocomplete.domain.SearchResultItem
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -47,19 +49,13 @@ fun SearchResultsView(
 
     LazyColumn(
         state = listState,
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+        modifier = Modifier.fillMaxSize()
     ) {
-        itemsIndexed(
+        items(
             items = searchResultItems,
-            key = { _, item -> item.itemKey() }
-        ) { index, item ->
+            key = { item -> item.itemKey() }
+        ) { item ->
             SearchResultItemView(
-                modifier = Modifier.padding(
-                    top = if (index == 0) 16.dp else 0.dp,
-                    bottom = if (index == searchResultItems.lastIndex) 16.dp else 0.dp
-                ),
                 item = item,
                 onClick = { onSearchResultItemClick(item) },
             )
@@ -69,24 +65,28 @@ fun SearchResultsView(
 
 @Composable
 fun SearchResultItemView(
-    modifier: Modifier = Modifier,
     item: SearchResultItem,
     onClick: () -> Unit,
 ) {
-    Row(
-        modifier = modifier
+    Box(
+        modifier = Modifier
             .fillMaxWidth()
-            .animateContentSize()
-            .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically,
+            .clickable(onClick = onClick)
     ) {
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = item.itemTitle(),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyLarge
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .animateContentSize()
+                .padding(all = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = item.displayTitle(),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
     }
 }
 
@@ -97,10 +97,18 @@ private fun SearchResultItem.itemKey(): String {
     }
 }
 
-private fun SearchResultItem.itemTitle(): String {
+@Composable
+private fun SearchResultItem.displayTitle(): String {
     return when (this) {
-        is SearchResultItem.Repository -> this.repositoryName
-        is SearchResultItem.User -> this.loginName
+        is SearchResultItem.Repository -> stringResource(
+            id = R.string.search_result_item_repository,
+            this.repositoryName
+        )
+
+        is SearchResultItem.User -> stringResource(
+            id = R.string.search_result_item_user,
+            this.loginName
+        )
     }
 }
 

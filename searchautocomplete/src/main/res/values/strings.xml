@@ -12,4 +12,6 @@
     <string name="idle_message">Enter at least 3 characters to find users and repositories.</string>
     <string name="no_results_title">No results found</string>
     <string name="no_results_message">No GitHub users or repositories match %1$s.\nTry a different search.</string>
+    <string name="search_result_item_repository">repo: %1$s</string>
+    <string name="search_result_item_user">user: %1$s</string>
 </resources>

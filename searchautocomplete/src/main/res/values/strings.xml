@@ -1,4 +1,5 @@
 <resources>
     <string name="search_placeholder_text">GitHub users and repositories</string>
     <string name="back_button_content_description">Navigate Back</string>
+    <string name="clear_text_icon_description">Clear text</string>
 </resources>

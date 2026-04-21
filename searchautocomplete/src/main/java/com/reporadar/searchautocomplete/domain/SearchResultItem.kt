@@ -1,13 +1,21 @@
 package com.reporadar.searchautocomplete.domain
 
-sealed class SearchResultItem {
+sealed class SearchResultItem(
+    open val id: Long
+) {
 
     data class User(
+        override val id: Long,
         val loginName: String
-    ) : SearchResultItem()
+    ) : SearchResultItem(
+        id = id
+    )
 
     data class Repository(
+        override val id: Long,
         val repositoryName: String
-    ) : SearchResultItem()
+    ) : SearchResultItem(
+        id = id
+    )
 
 }

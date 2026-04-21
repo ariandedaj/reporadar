@@ -11,12 +11,14 @@ data class UserResultDto(
 
 @Serializable
 data class UserDto(
+    val id: Long? = null,
     val login: String? = null
 ) {
 
     @Throws(IllegalArgumentException::class)
     fun toDomain(): SearchResultItem.User {
         return SearchResultItem.User(
+            id = requireNotNull(this.id),
             loginName = requireNotNull(this.login)
         )
     }

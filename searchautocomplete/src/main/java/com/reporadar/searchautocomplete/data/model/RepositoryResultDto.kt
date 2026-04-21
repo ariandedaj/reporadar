@@ -11,6 +11,7 @@ data class RepositoryResultDto(
 
 @Serializable
 data class RepositoryDto(
+    val id: Long? = null,
     @SerialName("full_name")
     val fullName: String? = null
 ) {
@@ -18,6 +19,7 @@ data class RepositoryDto(
     @Throws(IllegalArgumentException::class)
     fun toDomain(): SearchResultItem.Repository {
         return SearchResultItem.Repository(
+            id = requireNotNull(this.id),
             repositoryName = requireNotNull(this.fullName)
         )
     }

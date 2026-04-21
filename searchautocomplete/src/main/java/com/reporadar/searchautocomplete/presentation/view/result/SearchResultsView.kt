@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.reporadar.searchautocomplete.domain.SearchResultItem
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -96,4 +97,16 @@ private fun SearchResultItem.itemTitle(): String {
         is SearchResultItem.Repository -> this.repositoryName
         is SearchResultItem.User -> this.loginName
     }
+}
+
+@Preview
+@Composable
+fun SearchResultsPreview(
+) {
+    SearchResultsView(
+        searchResultItems = listOf(
+            SearchResultItem.User(id = 1, loginName = "user"),
+            SearchResultItem.Repository(id = 2, repositoryName = "reporadar")
+        )
+    )
 }

@@ -7,17 +7,7 @@ local.properties
 
 # Android Studio / IntelliJ
 *.iml
-.idea/caches
-.idea/libraries
-.idea/modules.xml
-.idea/navEditor.xml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/jarRepositories.xml
-.idea/deploymentTargetSelector.xml
+.idea/*
 
 # Android / Kotlin
 *.apk

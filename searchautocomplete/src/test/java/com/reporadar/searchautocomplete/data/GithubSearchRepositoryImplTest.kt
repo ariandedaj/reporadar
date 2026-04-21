@@ -1,6 +1,5 @@
 package com.reporadar.searchautocomplete.data
 
-import com.reporadar.searchautocomplete.data.api.GithubApi
 import com.reporadar.searchautocomplete.data.model.RepositoryDto
 import com.reporadar.searchautocomplete.data.model.RepositoryResultDto
 import com.reporadar.searchautocomplete.data.model.UserDto

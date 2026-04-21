@@ -12,8 +12,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
+internal const val LOADING_VIEW_TAG = "search_autocomplete_loading"
 
 private val LineWidthFractions = listOf(
     1f,
@@ -30,6 +33,7 @@ fun LoadingView() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .testTag(LOADING_VIEW_TAG)
             .padding(all = 16.dp),
         verticalArrangement = Arrangement.spacedBy(space = 20.dp)
     ) {

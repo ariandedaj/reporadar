@@ -10,4 +10,6 @@
     <string name="retry_button">Retry</string>
     <string name="idle_title">Search GitHub</string>
     <string name="idle_message">Enter at least 3 characters to find users and repositories.</string>
+    <string name="no_results_title">No results found</string>
+    <string name="no_results_message">No GitHub users or repositories match %1$s.\nTry a different search.</string>
 </resources>

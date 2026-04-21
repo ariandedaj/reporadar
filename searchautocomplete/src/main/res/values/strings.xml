@@ -2,4 +2,10 @@
     <string name="search_placeholder_text">GitHub users and repositories</string>
     <string name="back_button_content_description">Navigate Back</string>
     <string name="clear_text_icon_description">Clear text</string>
+    <string name="general_unknown_error">Unexpected error occurred. Please try again.\nIf the problem persists, contact support.</string>
+    <string name="general_error_no_internet_connection">No internet connection.\nPlease check your network and try again.</string>
+    <string name="general_error_request_failed">Request failed (Status code: %1$d).\nPlease try again later.</string>
+    <string name="general_error_service_unavailable">Service is currently unavailable\n(Status code: %1$d).\nPlease try again later.\nIf the problem persists, contact support.</string>
+    <string name="unknown_error_icon_description">Robot indicating an unexpected error occurred</string>
+    <string name="retry_button">Retry</string>
 </resources>

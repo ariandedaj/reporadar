@@ -21,37 +21,37 @@ class GithubSearchRepositoryImpl(
             val repositoryItems = repositories.items.orEmpty().map { it.toDomain() }
             val userItems = users.items.orEmpty().map { it.toDomain() }
 
-            val combined = (repositoryItems + userItems).sortedWith(
-                comparator = compareBy(comparator = String.CASE_INSENSITIVE_ORDER) { item ->
-                    when (item) {
-                        is SearchResultItem.Repository -> item.repositoryName
-                        is SearchResultItem.User -> item.loginName
-                    }
+            val combinedItems = repositoryItems + userItems
+
+            val sortedItems = combinedItems.sortedBy { item ->
+                when (item) {
+                    is SearchResultItem.Repository -> item.repositoryName
+                    is SearchResultItem.User -> item.loginName
                 }
-            )
-            SearchResult.Success(items = combined)
+            }
+            SearchResult.Success(items = sortedItems)
         } catch (e: ClientRequestException) {
             SearchResult.Error(
-                FetchDataErrorType.HttpError(
+                errorType = FetchDataErrorType.HttpError(
                     exception = e,
                     httpStatusCode = e.response.status.value
                 )
             )
         } catch (e: ServerResponseException) {
             SearchResult.Error(
-                FetchDataErrorType.HttpError(
+                errorType = FetchDataErrorType.HttpError(
                     exception = e,
                     httpStatusCode = e.response.status.value
                 )
             )
         } catch (e: IOException) {
-            SearchResult.Error(FetchDataErrorType.NoInternet(exception = e))
+            SearchResult.Error(errorType = FetchDataErrorType.NoInternet(exception = e))
         } catch (e: SerializationException) {
-            SearchResult.Error(FetchDataErrorType.ParsingFailed(exception = e))
+            SearchResult.Error(errorType = FetchDataErrorType.ParsingFailed(exception = e))
         } catch (e: IllegalArgumentException) {
-            SearchResult.Error(FetchDataErrorType.ResponseMappingFailed(exception = e))
+            SearchResult.Error(errorType = FetchDataErrorType.ResponseMappingFailed(exception = e))
         } catch (e: Exception) {
-            SearchResult.Error(FetchDataErrorType.Unknown(exception = e))
+            SearchResult.Error(errorType = FetchDataErrorType.Unknown(exception = e))
         }
     }
 

@@ -13,6 +13,8 @@ sealed class SearchAutocompleteUiState {
         val items: List<SearchResultItem>
     ) : SearchAutocompleteUiState()
 
+    object NoResults : SearchAutocompleteUiState()
+
     data class Failure(
         val errorType: FetchDataErrorType
     ) : SearchAutocompleteUiState()

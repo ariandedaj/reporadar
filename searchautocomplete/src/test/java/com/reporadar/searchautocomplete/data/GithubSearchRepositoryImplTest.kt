@@ -42,4 +42,28 @@ class GithubSearchRepositoryImplTest {
             assertEquals("Zebra/late", (items[2] as SearchResultItem.Repository).repositoryName)
         }
 
+    @Test
+    fun search_returnsFiftyItems_afterMergeAndSort() = runTest {
+        val repoItems = (1L..30L).map { id ->
+            RepositoryDto(id = id, fullName = "repo-${id.toString().padStart(3, '0')}")
+        }
+        val userItems = (31L..60L).map { id ->
+            UserDto(id = id, login = "user-${id.toString().padStart(3, '0')}")
+        }
+        val api = FakeGithubApi(
+            repos = RepositoryResultDto(items = repoItems),
+            users = UserResultDto(items = userItems),
+        )
+        val repository = GithubSearchRepositoryImpl(api = api)
+
+        val result = repository.search(query = "test")
+
+        assertTrue(
+            "expected Success, was $result",
+            result is SearchResult.Success
+        )
+        val items = (result as SearchResult.Success).items
+        assertEquals(50, items.size)
+    }
+
 }

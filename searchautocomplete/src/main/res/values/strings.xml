@@ -8,4 +8,6 @@
     <string name="general_error_service_unavailable">Service is currently unavailable\n(Status code: %1$d).\nPlease try again later.\nIf the problem persists, contact support.</string>
     <string name="unknown_error_icon_description">Robot indicating an unexpected error occurred</string>
     <string name="retry_button">Retry</string>
+    <string name="idle_title">Search GitHub</string>
+    <string name="idle_message">Enter at least 3 characters to find users and repositories.</string>
 </resources>

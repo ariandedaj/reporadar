@@ -17,7 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.reporadar.searchautocomplete.presentation.view.BackButton
 import com.reporadar.searchautocomplete.presentation.view.SearchField
-import com.reporadar.searchautocomplete.presentation.view.SearchResultsView
+import com.reporadar.searchautocomplete.presentation.view.result.SearchResultsView
+import com.reporadar.searchautocomplete.presentation.view.error.ErrorView
+import com.reporadar.searchautocomplete.presentation.view.idle.IdleView
+import com.reporadar.searchautocomplete.presentation.view.loading.LoadingView
+import com.reporadar.searchautocomplete.presentation.view.noresults.NoResultsView
+import com.reporadar.searchautocomplete.presentation.viewmodel.SearchAutocompleteUiState
 import com.reporadar.searchautocomplete.presentation.viewmodel.SearchAutocompleteViewModel
 import com.reporadar.searchautocomplete.presentation.viewmodel.factory.createSearchAutocompleteViewModel
 
@@ -28,6 +33,7 @@ fun SearchAutocompleteScreen(
     onBackButtonClick: () -> Unit
 ) {
     val searchQuery by viewModel.searchQuery.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -59,7 +65,24 @@ fun SearchAutocompleteScreen(
                     .fillMaxSize()
                     .padding(paddingValues = innerPadding)
             ) {
-                SearchResultsView()
+                when (val state = uiState) {
+                    SearchAutocompleteUiState.Idle -> IdleView()
+
+                    is SearchAutocompleteUiState.Loading -> LoadingView()
+
+                    is SearchAutocompleteUiState.Failure -> ErrorView(
+                        errorType = state.errorType,
+                        onRetryButtonClick = { viewModel.onRetryButtonClick() }
+                    )
+
+                    is SearchAutocompleteUiState.Success -> SearchResultsView(
+                        searchResultItems = state.items
+                    )
+
+                    SearchAutocompleteUiState.NoResults -> NoResultsView(
+                        searchQuery = searchQuery
+                    )
+                }
             }
         }
     )

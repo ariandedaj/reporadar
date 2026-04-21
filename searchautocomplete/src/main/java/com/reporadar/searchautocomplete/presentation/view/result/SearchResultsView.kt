@@ -1,6 +1,7 @@
 package com.reporadar.searchautocomplete.presentation.view.result
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.filter
 @Composable
 fun SearchResultsView(
     searchResultItems: List<SearchResultItem>,
+    onSearchResultItemClick: (SearchResultItem) -> Unit,
 ) {
     val listState = rememberLazyListState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -58,7 +60,8 @@ fun SearchResultsView(
                     top = if (index == 0) 16.dp else 0.dp,
                     bottom = if (index == searchResultItems.lastIndex) 16.dp else 0.dp
                 ),
-                item = item
+                item = item,
+                onClick = { onSearchResultItemClick(item) },
             )
         }
     }
@@ -67,12 +70,14 @@ fun SearchResultsView(
 @Composable
 fun SearchResultItemView(
     modifier: Modifier = Modifier,
-    item: SearchResultItem
+    item: SearchResultItem,
+    onClick: () -> Unit,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .animateContentSize(),
+            .animateContentSize()
+            .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -107,6 +112,7 @@ fun SearchResultsPreview(
         searchResultItems = listOf(
             SearchResultItem.User(id = 1, loginName = "user"),
             SearchResultItem.Repository(id = 2, repositoryName = "reporadar")
-        )
+        ),
+        onSearchResultItemClick = {},
     )
 }

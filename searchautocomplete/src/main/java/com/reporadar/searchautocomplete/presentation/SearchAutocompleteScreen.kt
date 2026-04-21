@@ -22,6 +22,7 @@ import com.reporadar.searchautocomplete.presentation.view.error.ErrorView
 import com.reporadar.searchautocomplete.presentation.view.idle.IdleView
 import com.reporadar.searchautocomplete.presentation.view.loading.LoadingView
 import com.reporadar.searchautocomplete.presentation.view.noresults.NoResultsView
+import com.reporadar.searchautocomplete.domain.SearchResultItem
 import com.reporadar.searchautocomplete.presentation.viewmodel.SearchAutocompleteUiState
 import com.reporadar.searchautocomplete.presentation.viewmodel.SearchAutocompleteViewModel
 import com.reporadar.searchautocomplete.presentation.viewmodel.factory.createSearchAutocompleteViewModel
@@ -30,7 +31,8 @@ import com.reporadar.searchautocomplete.presentation.viewmodel.factory.createSea
 @OptIn(ExperimentalMaterial3Api::class)
 fun SearchAutocompleteScreen(
     viewModel: SearchAutocompleteViewModel = createSearchAutocompleteViewModel(),
-    onBackButtonClick: () -> Unit
+    onSearchResultItemClick: (SearchResultItem) -> Unit,
+    onBackButtonClick: () -> Unit,
 ) {
     val searchQuery by viewModel.searchQuery.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
@@ -76,7 +78,8 @@ fun SearchAutocompleteScreen(
                     )
 
                     is SearchAutocompleteUiState.Success -> SearchResultsView(
-                        searchResultItems = state.items
+                        searchResultItems = state.items,
+                        onSearchResultItemClick = onSearchResultItemClick,
                     )
 
                     SearchAutocompleteUiState.NoResults -> NoResultsView(
@@ -91,7 +94,10 @@ fun SearchAutocompleteScreen(
 @Preview
 @Composable
 fun SearchAutocompleteScreenPreview() {
-    SearchAutocompleteScreen {
-        //nothing here for the preview
-    }
+    SearchAutocompleteScreen(
+        onSearchResultItemClick = {},
+        onBackButtonClick = {
+            //nothing here for the preview
+        },
+    )
 }

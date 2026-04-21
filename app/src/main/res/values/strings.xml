@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">RepoRadar</string>
     <string name="root_placeholder">Search GitHub users and repositories.</string>
+    <string name="root_selected_user">Selected user: %1$s</string>
+    <string name="root_selected_repository">Selected repository: %1$s</string>
     <string name="search_button_content_description">Search button</string>
 </resources>

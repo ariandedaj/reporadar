@@ -23,12 +23,9 @@ class GithubSearchRepositoryImpl(
 
             val combinedItems = repositoryItems + userItems
 
-            val sortedItems = combinedItems.sortedBy { item ->
-                when (item) {
-                    is SearchResultItem.Repository -> item.repositoryName
-                    is SearchResultItem.User -> item.loginName
-                }
-            }
+            val sortedItems = combinedItems
+                .sortedBy { it.sortKey() }
+                .take(RESULT_LIMIT)
             SearchResult.Success(items = sortedItems)
         } catch (e: ClientRequestException) {
             SearchResult.Error(
@@ -58,5 +55,10 @@ class GithubSearchRepositoryImpl(
     companion object {
         private const val RESULT_LIMIT = 50
     }
-
 }
+
+private fun SearchResultItem.sortKey(): String =
+    when (this) {
+        is SearchResultItem.Repository -> repositoryName.lowercase()
+        is SearchResultItem.User -> loginName.lowercase()
+    }

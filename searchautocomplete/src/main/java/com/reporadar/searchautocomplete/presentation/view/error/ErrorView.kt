@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.reporadar.searchautocomplete.R
 import com.reporadar.searchautocomplete.data.result.FetchDataErrorType
@@ -49,5 +50,15 @@ fun ErrorView(
         ) {
             Text(text = stringResource(id = R.string.retry_button))
         }
+    }
+}
+
+@Preview
+@Composable
+fun ErrorPreview() {
+    ErrorView(
+        errorType = FetchDataErrorType.Unknown()
+    ) {
+        // nothing here for the preview
     }
 }

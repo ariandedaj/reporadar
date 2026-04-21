@@ -34,12 +34,12 @@ fun LoadingView() {
         modifier = Modifier
             .fillMaxWidth()
             .testTag(LOADING_VIEW_TAG)
-            .padding(all = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(space = 20.dp)
+            .padding(horizontal = 16.dp)
     ) {
         LineWidthFractions.forEach { lineWidth ->
             Box(
                 modifier = Modifier
+                    .padding(vertical = 16.dp)
                     .fillMaxWidth(fraction = lineWidth)
                     .height(height = 16.dp)
                     .clip(shape = RoundedCornerShape(size = 4.dp))

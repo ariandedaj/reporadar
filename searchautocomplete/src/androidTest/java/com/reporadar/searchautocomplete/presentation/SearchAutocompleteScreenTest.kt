@@ -42,17 +42,19 @@ class SearchAutocompleteScreenTest {
 
     @Test
     fun successState_showsSearchResultsView() {
-        val user = "success-user"
-        val repository = "success-org/success-repo"
+        val userLogin = "success-user"
+        val repositoryName = "success-org/success-repo"
         val viewModel = FakeSearchAutocompleteViewModel(
             searchQuery = "abc",
             uiState = SearchAutocompleteUiState.Success(
                 items = listOf(
-                    SearchResultItem.User(id = 1L, loginName = user),
-                    SearchResultItem.Repository(id = 2L, repositoryName = repository),
+                    SearchResultItem.User(id = 1L, loginName = userLogin),
+                    SearchResultItem.Repository(id = 2L, repositoryName = repositoryName),
                 ),
             ),
         )
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+
         composeRule.setContent {
             MaterialTheme {
                 SearchAutocompleteScreen(
@@ -63,8 +65,16 @@ class SearchAutocompleteScreenTest {
             }
         }
 
-        composeRule.onNodeWithText(user).assertIsDisplayed()
-        composeRule.onNodeWithText(repository).assertIsDisplayed()
+        composeRule
+            .onNodeWithText(
+                context.getString(R.string.search_result_item_user, userLogin)
+            )
+            .assertIsDisplayed()
+        composeRule
+            .onNodeWithText(
+                context.getString(R.string.search_result_item_repository, repositoryName)
+            )
+            .assertIsDisplayed()
     }
 
     @Test
